@@ -13,5 +13,5 @@ export class CreateUserDto extends AuditDto{
     des_senha: string;
 
     @IsString()
-    flg_inativo: string;
+    flg_inativo: boolean;
 }

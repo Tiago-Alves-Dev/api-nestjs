@@ -9,14 +9,14 @@ export class ClientEntity extends AuditEntity{
     @Column({ name: 'DES_NOME'})
     des_nome: string;
 
-    @Column({ name: 'FLG_INATIVO'})
-    flg_inativo: string;
+    @Column({ name: 'FLG_INATIVO', default: false})
+    flg_inativo: boolean;
 
     @Column({ name: 'DES_ENDERECO'})
     des_endereco: string;
 
     @Column({ name: 'NUM_ENDERECO'})
-    num_endereco: string;
+    num_endereco: number;
 
     @Column({ name: 'DES_CIDADE'})
     des_cidade: string;
@@ -24,24 +24,18 @@ export class ClientEntity extends AuditEntity{
     @Column({ name: 'DES_UF'})
     des_uf: string;
 
-    @Column({ name: 'DES_TELEFONE', unique: true})
+    @Column({ name: 'DES_TELEFONE'})
     des_telefone: string;
 
-    @Column({ name: 'DES_CONTATO'})
+    @Column({ name: 'DES_CONTATO', unique: true})
     des_contato: string;
 
     @Column({ name: 'VAL_VENDA_ACUMULADO'})
-    val_venda_acumulado: string;
+    val_venda_acumulado: number;
 
     @Column({ name: 'QTD_VENDA_PEDIDOS'})
-    qtd_venda_pedidos: string;
+    qtd_venda_pedidos: number;
 
     @Column({ name: 'DTA_ULT_PEDIDO'})
-    dta_ult_pedido: string;
-
-    @Column({ name: 'DTA_CADASTRO'})
-    dta_cadastro: string;
-
-    @Column({ name: 'DTA_ALTERACAO'})
-    dta_alteracao: string; 
+    dta_ult_pedido: Date; 
 }

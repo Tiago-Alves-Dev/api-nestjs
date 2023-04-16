@@ -16,6 +16,6 @@ export class UserEntity extends AuditEntity{
     @Column({ name: 'DES_SENHA',})
     des_senha: string;
 
-    @Column({ name: 'FLG_INATIVO' })
-    flg_inativo: string;
+    @Column({ name: 'FLG_INATIVO', default: false })
+    flg_inativo: boolean;
 }

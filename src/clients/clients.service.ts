@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientRepository } from 'shared/repositories';
@@ -19,14 +19,28 @@ export class ClientsService {
   }
 
   async findAll() {
-    return await this.repository.findAll({});
+    return await this.repository.findAll({
+      relations: ['sales']
+    });
   }
 
   async findOne(cod_cliente: string) {
+    const client = await this.repository.findOne({where: {cod_cliente}});
+    
+    if (!client) {
+      throw new UnauthorizedException('Cliente não existe');
+    }
+
     return await this.repository.findOne({where: {cod_cliente}})
   }
 
   async update(cod_cliente: string, updateClientDto: UpdateClientDto) {
+    const client = await this.repository.findOne({where: {cod_cliente}});
+    
+    if (!client) {
+      throw new UnauthorizedException('Cliente não existe');
+    }
+
     return await this.repository.update(
       { cod_cliente },
       {
@@ -37,6 +51,12 @@ export class ClientsService {
   }
 
   async remove(cod_cliente: string) {
+    const client = await this.repository.findOne({where: {cod_cliente}});
+    
+    if (!client) {
+      throw new UnauthorizedException('Cliente não existe');
+    }
+    
     return await this.repository.delete({ cod_cliente })
   }
 }

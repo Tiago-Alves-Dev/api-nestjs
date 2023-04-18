@@ -1,5 +1,6 @@
+import { SaleEntity } from "sales/entities/sale.entity";
 import { AuditEntity } from "shared/entities/audit.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('CLIENT')
 export class ClientEntity extends AuditEntity{
@@ -38,4 +39,11 @@ export class ClientEntity extends AuditEntity{
 
     @Column({ name: 'DTA_ULT_PEDIDO'})
     dta_ult_pedido: Date; 
+
+    /**
+    * ENTITY RELATIONS
+    */
+
+    @OneToMany(() => SaleEntity, (sales) => sales.client)
+    sales?: SaleEntity[];
 }

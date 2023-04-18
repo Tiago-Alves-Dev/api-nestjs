@@ -5,6 +5,8 @@ import { RepositoryModule } from './shared/repositories/repository.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from './clients/clients.module';
 import { AuthModule } from './auth/auth.module';
+import { SalesModule } from './sales/sales.module';
+import { SalesItemModule } from './sales-item/sales-item.module';
 
 
 @Module({
@@ -16,6 +18,8 @@ import { AuthModule } from './auth/auth.module';
 
     UsersModule,
     ClientsModule,
+    SalesModule,
+    SalesItemModule,
   ],
   controllers: [],
   providers: [],

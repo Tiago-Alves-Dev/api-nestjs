@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 import { AuditDto } from "shared/dtos/audit.dto";
 
 export class CreateClientDto extends AuditDto{
@@ -11,8 +11,8 @@ export class CreateClientDto extends AuditDto{
     @IsString()
     des_endereco: string;
 
-    @IsString()
-    num_endereco: string;
+    @IsNumber()
+    num_endereco: number;
 
     @IsString()
     des_cidade: string;
@@ -26,18 +26,13 @@ export class CreateClientDto extends AuditDto{
     @IsString()
     des_contato: string;
 
-    @IsString()
-    val_venda_acumulado: string;
+    @IsNumber()
+    val_venda_acumulado: number;
+
+    @IsNumber()
+    qtd_venda_pedidos: number;
 
     @IsString()
-    qtd_venda_pedidos: string;
+    dta_ult_pedido: Date;
 
-    @IsString()
-    dta_ult_pedido: string;
-
-    @IsString()
-    dta_cadastro: string;
-
-    @IsString()
-    dta_alteracao: string;   
 }

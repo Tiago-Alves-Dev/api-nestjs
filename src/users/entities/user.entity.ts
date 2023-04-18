@@ -1,6 +1,6 @@
 
 import { AuditEntity } from "shared/entities/audit.entity";
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('USER')
 export class UserEntity extends AuditEntity{

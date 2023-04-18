@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from 'shared/repositories';
@@ -10,6 +10,7 @@ export class UsersService {
   constructor(
     private readonly repository: UserRepository,
   ) {}
+
   async create(createUserDto: CreateUserDto, createdBy?: string) {
     
     const hashPassword = await hash(createUserDto.des_senha, 8);
@@ -28,14 +29,22 @@ export class UsersService {
   }
 
   async findOne(cod_usuario: string) {
+    const user = await this.repository.findOne({where: {cod_usuario}});
+
+    if (!user) {
+      throw new UnauthorizedException('Usuário não existe');
+    }
+
     return await this.repository.findOne({where: {cod_usuario}});
   }
 
-  async findOneEmail(des_email: string) {
-    return await this.repository.findOne({where: {des_email}});
-  }
-
   async update(cod_usuario: string, updateUserDto: UpdateUserDto) {
+    const user = await this.repository.findOne({where: {cod_usuario}});
+    
+    if (!user) {
+      throw new UnauthorizedException('Usuário não existe');
+    }
+
     return await this.repository.update(
       { cod_usuario },
       {
@@ -46,6 +55,12 @@ export class UsersService {
   }
 
   async remove(cod_usuario: string) {
+    const user = await this.repository.findOne({where: {cod_usuario}});
+
+    if (!user) {
+      throw new UnauthorizedException('Usuário não existe');
+    }
+
     return await this.repository.delete({ cod_usuario });
   }
 }

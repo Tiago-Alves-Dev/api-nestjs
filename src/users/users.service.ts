@@ -4,17 +4,21 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from 'shared/repositories';
 import { hash } from 'bcryptjs';
 
-
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly repository: UserRepository,
-  ) {}
+  constructor(private readonly repository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto, createdBy?: string) {
-    
+    const userExist = await this.repository.findOne({
+      where: { des_email: createUserDto.des_email },
+    });
+
+    if (userExist) {
+      throw new UnauthorizedException('E-mail já cadastrado');
+    }
+
     const hashPassword = await hash(createUserDto.des_senha, 8);
-    createUserDto.des_senha = hashPassword
+    createUserDto.des_senha = hashPassword;
 
     const user = await this.repository.create({
       ...createUserDto,
@@ -29,20 +33,28 @@ export class UsersService {
   }
 
   async findOne(cod_usuario: string) {
-    const user = await this.repository.findOne({where: {cod_usuario}});
+    const user = await this.repository.findOne({ where: { cod_usuario } });
 
     if (!user) {
       throw new UnauthorizedException('Usuário não existe');
     }
 
-    return await this.repository.findOne({where: {cod_usuario}});
+    return await this.repository.findOne({ where: { cod_usuario } });
   }
 
   async update(cod_usuario: string, updateUserDto: UpdateUserDto) {
-    const user = await this.repository.findOne({where: {cod_usuario}});
-    
+    const user = await this.repository.findOne({ where: { cod_usuario } });
+
     if (!user) {
       throw new UnauthorizedException('Usuário não existe');
+    }
+
+    const userExist = await this.repository.findOne({
+      where: { des_email: updateUserDto.des_email },
+    });
+
+    if (userExist) {
+      throw new UnauthorizedException('E-mail já cadastrado');
     }
 
     return await this.repository.update(
@@ -55,7 +67,7 @@ export class UsersService {
   }
 
   async remove(cod_usuario: string) {
-    const user = await this.repository.findOne({where: {cod_usuario}});
+    const user = await this.repository.findOne({ where: { cod_usuario } });
 
     if (!user) {
       throw new UnauthorizedException('Usuário não existe');

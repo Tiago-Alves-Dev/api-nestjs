@@ -6,7 +6,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 const config = new ConfigService();
 
 export async function getTypeOrmConfig(): Promise<TypeOrmModuleOptions> {
-  
   return {
     type: 'postgres',
     // url: config.get('DATABASE_URL'),
@@ -23,6 +22,7 @@ export async function getTypeOrmConfig(): Promise<TypeOrmModuleOptions> {
     cli: {
       migrationsDir: './src/database/migrations',
     },
+    // logging: true,
   };
 }
 
@@ -33,6 +33,6 @@ export async function DatabaseModule(): Promise<DynamicModule> {
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
-  })
+  });
   return TypeOrmModule.forRoot(await getTypeOrmConfig());
 }

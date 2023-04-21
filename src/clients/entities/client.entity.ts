@@ -31,7 +31,7 @@ export class ClientEntity extends AuditEntity {
   @Column({ name: 'DES_CONTATO', unique: true })
   des_contato: string;
 
-  @Column({ name: 'VAL_VENDA_ACUMULADO', default: 0 })
+  @Column({ name: 'VAL_VENDA_ACUMULADO', default: 0, type: 'float' })
   val_venda_acumulado?: number;
 
   @Column({ name: 'QTD_VENDA_PEDIDOS', default: 0 })

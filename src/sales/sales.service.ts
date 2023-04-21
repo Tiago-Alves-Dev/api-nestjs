@@ -24,7 +24,7 @@ export class SalesService {
         where: {
           dta_venda: Between(
             query.startDate + ' 00:00:00',
-            query.endDate + ' 24:00:00',
+            query.endDate + ' 23:59:59',
           ),
         },
         relations: ['itens', 'client'],

@@ -8,12 +8,12 @@ const config = new ConfigService();
 export async function getTypeOrmConfig(): Promise<TypeOrmModuleOptions> {
   return {
     type: 'postgres',
-    // url: config.get('DATABASE_URL'),
-    host: config.get('PG_HOST'),
-    port: config.get('PG_PORT'),
-    username: config.get('PG_USER'),
-    password: config.get('PG_PASSWORD'),
-    database: config.get('PG_DATABASE'),
+    url: config.get('DATABASE_URL'),
+    // host: config.get('PG_HOST'),
+    // port: config.get('PG_PORT'),
+    // username: config.get('PG_USER'),
+    // password: config.get('PG_PASSWORD'),
+    // database: config.get('PG_DATABASE'),
     entities: [resolve(__dirname, '..', '**', 'entities', '*.entity.{ts,js}')],
     migrations: [resolve(__dirname, 'migrations', '*.{ts,js}')],
     migrationsTableName: 'MIGRATIONS',
